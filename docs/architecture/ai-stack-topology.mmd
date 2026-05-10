@@ -1,0 +1,25 @@
+flowchart LR
+  subgraph host["server A (NixOS, standalone)"]
+    direction TB
+    nvidia["modules/ai/nvidia.nix\n(CUDA + container toolkit)"]
+    nixld["modules/ai/nix-ld.nix"]
+    python["modules/ai/python.nix\n(uv + python3)"]
+    hf["modules/ai/huggingface-cache.nix\n/tank/models/huggingface"]
+    pull["modules/ai/model-pull.nix\n(systemd timer)"]
+
+    subgraph services["AI services (mkEnableOption-gated)"]
+      direction TB
+      vllm["vLLM HTTP :8000"]
+      ollama["Ollama HTTP :11434"]
+      llama["llama.cpp"]
+      jupyter["JupyterHub :8888"]
+    end
+
+    nvidia --> vllm & ollama & llama
+    nixld --> python --> vllm & jupyter
+    pull --> hf
+    hf --> vllm & ollama & llama & jupyter
+  end
+
+  classDef stub stroke-dasharray:5 5
+  class vllm,jupyter,pull stub

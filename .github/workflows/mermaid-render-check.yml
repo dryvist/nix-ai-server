@@ -1,0 +1,30 @@
+name: Mermaid render check
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "docs/**/*.mmd"
+      - "docs/**/*.svg"
+      - ".github/scripts/render-mermaid.sh"
+      - ".github/workflows/mermaid-render-check.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  render:
+    name: Re-render .mmd and fail on .svg drift
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Install Nix
+        uses: DeterminateSystems/determinate-nix-action@v3
+
+      - name: Re-render every .mmd to .svg
+        run: bash .github/scripts/render-mermaid.sh
+
+      - name: Fail on uncommitted .svg drift
+        run: git diff --exit-code -- docs

@@ -1,0 +1,27 @@
+flowchart TB
+  subgraph nvme["NVMe (root)"]
+    esp["ESP /boot (vfat, 1G)"]
+    btrfs["btrfs root"]
+    sub_root["@ -> /"]
+    sub_home["@home -> /home"]
+    sub_nix["@nix -> /nix"]
+    sub_var["@var -> /var"]
+    btrfs --> sub_root & sub_home & sub_nix & sub_var
+  end
+
+  subgraph ssd["SSD (cache)"]
+    l2arc["L2ARC vdev for tank"]
+  end
+
+  subgraph hdd["4x 4TB HDD"]
+    raidz2["ZFS RAIDZ2 pool: tank"]
+    ds_models["tank/models (HuggingFace cache)"]
+    ds_jupyter["tank/jupyter (notebook home dirs)"]
+    ds_datasets["tank/datasets (training data)"]
+    raidz2 --> ds_models & ds_jupyter & ds_datasets
+  end
+
+  l2arc -. accelerates .-> raidz2
+
+  classDef placeholder stroke-dasharray:5 5
+  class l2arc,raidz2,ds_models,ds_jupyter,ds_datasets placeholder

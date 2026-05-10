@@ -1,0 +1,28 @@
+flowchart LR
+  subgraph dryvist["dryvist org"]
+    direction TB
+    schemas["homelab-schemas\n(JSON Schema source of truth)"]
+    pxe["nix-pxe-bootstrap\n(NixOS-on-Pi PXE host)"]
+    cluster_ans["ansible-proxmox-cluster\n(B+C+D host config)"]
+    cluster_tofu["tofu-proxmox-cluster\n(VMs/LXCs/HA via OpenTofu)"]
+    apps["ansible-server-apps\n(Cribl/HAProxy/OpenBao/...)"]
+    ai["nix-ai-server\n(server A, standalone)\n*** this repo ***"]
+  end
+
+  subgraph hardware["hardware"]
+    pi["Pi/MiniPC"]
+    b["server B (Proxmox)"]
+    c["server C (Proxmox, R410)"]
+    d["server D (Proxmox, R710)"]
+    a["server A (NixOS, GPU)"]
+  end
+
+  pxe --> pi --> b
+  schemas -.consumed.- cluster_ans
+  schemas -.consumed.- apps
+  schemas -.consumed.- cluster_tofu
+  cluster_ans --> b & c & d
+  cluster_tofu --> b & c & d
+  apps --> b & c & d
+  ai --> a
+  a -. LAN OpenBao client .- apps

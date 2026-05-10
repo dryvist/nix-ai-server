@@ -1,0 +1,21 @@
+sequenceDiagram
+  autonumber
+  actor Op as Operator (Mac)
+  participant A as Server A (fresh hardware)
+  participant Flake as github:dryvist/nix-ai-server
+  participant SOPS as sops-nix (age)
+  participant BAO as Cluster OpenBao LXC
+
+  Op->>A: PXE / kexec into NixOS installer
+  Op->>Flake: nix run nixos-anywhere -- --flake .#ai-server-a root@A
+  Flake->>A: disko partitions NVMe + ZFS tank
+  Flake->>A: install NixOS toplevel, reboot
+  A->>A: ssh-host-key generated
+  Op->>A: ssh-to-age < /etc/ssh/ssh_host_ed25519_key.pub
+  Op->>Flake: PR adds host age key to .sops.yaml
+  Op->>Flake: PR encrypts AppRole secret-id into secrets/openbao-token.enc.yaml
+  Flake->>A: nixos-rebuild switch (CI deploys new closure)
+  SOPS->>A: decrypt /run/secrets/openbao-token at activation
+  A->>BAO: bao agent login (AppRole)
+  BAO-->>A: short-TTL tokens for vLLM / promtail / etc.
+  A->>A: AI services start with EnvironmentFile=/run/openbao/*.env
