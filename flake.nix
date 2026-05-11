@@ -23,10 +23,9 @@
       inputs.disko.follows = "disko";
     };
 
-    nix-ld = {
-      url = "github:nix-community/nix-ld";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # nix-ld is provided by nixpkgs (`programs.nix-ld`). We do not import the
+    # nix-community/nix-ld flake — it conflicts with the nixpkgs module
+    # ("nix-ld.dev cannot be enabled at the same time as nix-ld").
 
     # Python toolchain (uv2nix; ADR 0003 picks this over poetry2nix)
     pyproject-nix = {
@@ -57,7 +56,6 @@
       nixos-hardware,
       disko,
       sops-nix,
-      nix-ld,
       ...
     }@inputs:
     let
@@ -71,7 +69,6 @@
         modules = [
           disko.nixosModules.disko
           sops-nix.nixosModules.sops
-          nix-ld.nixosModules.nix-ld
           ./hosts/ai-server-a
           ./modules
         ];
