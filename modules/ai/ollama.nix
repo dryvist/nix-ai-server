@@ -17,8 +17,8 @@
 
   config = lib.mkIf config.ai.ollama.enable {
     services.ollama = {
+      inherit (config.ai.ollama) acceleration;
       enable = true;
-      acceleration = config.ai.ollama.acceleration;
       host = "127.0.0.1";
       port = 11434;
     };
