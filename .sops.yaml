@@ -1,0 +1,19 @@
+---
+# SOPS configuration for nix-ai-server
+#
+# Recipients:
+#   - Maintainer age key (Jacob): committed below; matches ~/.config/sops/age/keys.txt
+#   - Bitwarden vault placeholder: real recipient added when SOPS key is mirrored to BWS
+#   - Host age key placeholder: derived via `ssh-to-age` after first nixos-anywhere run
+#     and added before any host-specific secrets are encrypted.
+#
+# Usage:
+#   sops --encrypt --in-place secrets/system.enc.yaml
+#   sops secrets/system.enc.yaml
+creation_rules:
+  - path_regex: ^secrets/.*\.enc\.ya?ml$
+    age: >-
+      age1y0jvtlp2ac8fwwvh2nzm88ehye74jlseywjrjcjqll7u8vycsedq788tp9
+  - path_regex: \.sops\.ya?ml$
+    age: >-
+      age1y0jvtlp2ac8fwwvh2nzm88ehye74jlseywjrjcjqll7u8vycsedq788tp9

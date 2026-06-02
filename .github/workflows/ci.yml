@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  flake-check:
+    name: nix flake check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Install Nix
+        uses: DeterminateSystems/determinate-nix-action@v3
+        with:
+          extra-conf: |
+            max-jobs = auto
+            cores = 0
+            warn-dirty = false
+
+      - name: Cache Nix Store
+        uses: nix-community/cache-nix-action@v7
+        with:
+          primary-key: nix-${{ runner.os }}-${{ hashFiles('flake.lock') }}
+          restore-prefixes-first-match: |
+            nix-${{ runner.os }}-
+          gc-max-store-size-linux: 5G
+          save: ${{ github.ref == 'refs/heads/main' }}
+
+      - name: Flake check (formatting + statix + deadnix + module-eval)
+        run: nix flake check --print-build-logs

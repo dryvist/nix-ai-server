@@ -1,0 +1,44 @@
+name: Update flake dependencies
+
+on:
+  schedule:
+    - cron: "0 12 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  update:
+    name: nix flake update
+    runs-on: ubuntu-latest
+    environment: automation
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Install Nix
+        uses: DeterminateSystems/determinate-nix-action@v3
+
+      - name: nix flake update
+        run: nix flake update
+
+      - name: Validate flake
+        run: nix flake check --no-build
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v8
+        with:
+          sign-commits: true
+          branch: chore/update-flake
+          delete-branch: true
+          commit-message: "chore(deps): update nix flake inputs"
+          title: "chore(deps): update nix flake inputs"
+          body: |
+            Automated weekly bump of all flake inputs.
+
+            Triggered via `${{ github.event_name }}` on `deps-update-flake.yml`.
+          labels: dependencies

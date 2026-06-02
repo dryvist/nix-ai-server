@@ -1,0 +1,18 @@
+# Nix build outputs
+result
+result-*
+
+# direnv cache
+.direnv/
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+
+# Generated hardware-configuration (set after first nixos-anywhere run)
+# Tracked once real hardware is bound; placeholder kept for reference until then.
