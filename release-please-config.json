@@ -4,7 +4,6 @@
     ".": {
       "release-type": "simple",
       "bump-minor-pre-major": true,
-      "release-as": "0.1.0",
       "version-file": "VERSION",
       "include-v-in-tag": true,
       "changelog-sections": [
