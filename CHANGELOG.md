@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2](https://github.com/dryvist/nix-ai-server/compare/v0.1.1...v0.1.2) (2026-06-12)
+
+
+### Bug Fixes
+
+* **checks:** make module-eval eval-only with no store dependency ([#10](https://github.com/dryvist/nix-ai-server/issues/10)) ([7e5cca5](https://github.com/dryvist/nix-ai-server/commit/7e5cca5c690883ca638f407557c0e131fd439d3a))
+
 ## [0.1.1](https://github.com/dryvist/nix-ai-server/compare/v0.1.0...v0.1.1) (2026-06-12)
 
 
