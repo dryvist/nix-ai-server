@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/dryvist/nix-ai-server/compare/v0.1.0...v0.1.1) (2026-06-12)
+
+
+### Bug Fixes
+
+* **release:** drop one-time release-as pin now that 0.1.0 has shipped ([#8](https://github.com/dryvist/nix-ai-server/issues/8)) ([f2ce790](https://github.com/dryvist/nix-ai-server/commit/f2ce790baa233126bc485ec2694573a4aa382dfc))
+
 ## 0.1.0 (2026-06-12)
 
 
