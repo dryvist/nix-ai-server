@@ -1,12 +1,11 @@
 # nix-ai-server
 
-NixOS bare-metal flake for **server A** of the dryvist homelab —
-the GPU-equipped AI host running vLLM, Ollama, llama.cpp, and (optionally)
-JupyterHub for local inference and experimentation.
+NixOS bare-metal flake for a GPU-equipped AI host running vLLM, Ollama,
+llama.cpp, and (optionally) JupyterHub for local inference and
+experimentation.
 
-Server A is **standalone**. It never joins the Proxmox cluster (B+C+D),
-exposes no cluster-mesh option, and its 1 GbE link is treated as
-a normal LAN node — not a cluster fabric peer.
+The host is **standalone**: it exposes no cluster-mesh option and its
+1 GbE link is treated as a normal LAN node, never a cluster fabric peer.
 
 ## What's in this flake
 
@@ -91,20 +90,10 @@ cd ../<type>/<slug>
 
 Never edit files in the `main/` worktree — a hook will block writes there.
 
-## Where this fits
-
-See `docs/architecture/ecosystem-context.svg` for the full dryvist
-homelab map. Sibling repos:
-
-| Repo | Role |
-| --- | --- |
-| `dryvist/ansible-proxmox-cluster` | Host-level config of B+C+D (cluster init, ZFS, PBS) |
-| `dryvist/tofu-proxmox-cluster` | OpenTofu IaC for cluster VMs/LXCs |
-| `dryvist/ansible-server-apps` | App deployments inside cluster guests |
-| `dryvist/homelab-schemas` | JSON Schema source of truth for inventory |
-| `dryvist/nix-pxe-bootstrap` | NixOS-on-Pi PXE host for cluster bare-metal |
-| `dryvist/nix-ai-server` (this) | Server A — standalone, never joins the cluster |
-
 ## License
 
 MIT — see [LICENSE](./LICENSE).
+
+---
+
+> Part of a [larger ecosystem of ~40 repos](https://docs.jacobpevans.com) — see how it all fits together.
