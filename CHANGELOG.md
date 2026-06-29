@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.3](https://github.com/dryvist/nix-ai-server/compare/v0.1.2...v0.1.3) (2026-06-29)
+
+
+### Bug Fixes
+
+* **renovate:** drop stale shadowed renovate.json5 ([#16](https://github.com/dryvist/nix-ai-server/issues/16)) ([6d38299](https://github.com/dryvist/nix-ai-server/commit/6d382998cacf2681bf977d8c86f4954e697fc760))
+
 ## [0.1.2](https://github.com/dryvist/nix-ai-server/compare/v0.1.1...v0.1.2) (2026-06-12)
 
 
