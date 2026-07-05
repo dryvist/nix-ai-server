@@ -2,8 +2,8 @@
   description = "dryvist server A — bare-metal NixOS AI host (standalone, never joins the Proxmox cluster)";
 
   inputs = {
-    # Stable channel pin — Renovate auto-PRs the bump to nixos-26.05 when it ships
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    # Stable channel pin — Renovate auto-PRs the bump when the next release ships
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
