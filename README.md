@@ -1,5 +1,14 @@
 # nix-ai-server
 
+> **Archived 2026-07-03.** This repo is superseded and frozen as read-only
+> history — see [ADR 0001 in dryvist/nixos-ai](https://github.com/dryvist/nixos-ai/blob/main/docs/adr/0001-consolidate-on-nixos-ai.md)
+> for the decision. The generic, accelerator-agnostic modules live on in
+> [`dryvist/nixos-ai`](https://github.com/dryvist/nixos-ai) (salvaged in
+> [nixos-ai PR #7](https://github.com/dryvist/nixos-ai/pull/7)); the future
+> AI-workload guest plan is tracked in
+> [nixos-ai issue #8](https://github.com/dryvist/nixos-ai/issues/8). Do not
+> resume development here.
+
 NixOS bare-metal flake for a GPU-equipped AI host running vLLM, Ollama,
 llama.cpp, and (optionally) JupyterHub for local inference and
 experimentation.
